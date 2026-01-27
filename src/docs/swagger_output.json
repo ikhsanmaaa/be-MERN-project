@@ -44,9 +44,6 @@
                   },
                   "password": {
                     "example": "any"
-                  },
-                  "confirmPassword": {
-                    "example": "any"
                   }
                 }
               }
@@ -113,16 +110,15 @@
           }
         },
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/activation"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/activation"
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "example": "any"
+                  }
+                }
               }
             }
           }
@@ -323,29 +319,6 @@
           "Events"
         ],
         "description": "",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "default": {
             "description": ""
@@ -711,11 +684,11 @@
         "properties": {
           "identifier": {
             "type": "string",
-            "example": "kucung"
+            "example": "temon"
           },
           "password": {
             "type": "string",
-            "example": "kucung123"
+            "example": "Temon123"
           }
         },
         "xml": {

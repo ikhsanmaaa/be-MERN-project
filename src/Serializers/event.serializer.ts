@@ -1,0 +1,23 @@
+import { EventDocument } from "../models/event.model";
+
+export function serializeEvent(event: any) {
+  if (!event) return event;
+
+  return {
+    _id: event._id,
+    name: event.name,
+    startDate: event.startDate,
+    endDate: event.endDate,
+    banner: event.banner,
+    category: event.category,
+    isFeatured: event.isFeatured,
+    isOnline: event.isOnline,
+    isPublish: event.isPublish,
+    description: event.description,
+    slug: event.slug,
+    createdBy: event.createdBy,
+    location: event.location,
+    createdAt: event.createdAt,
+    updatedAt: event.updatedAt,
+  };
+}

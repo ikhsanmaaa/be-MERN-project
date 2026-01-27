@@ -9,6 +9,7 @@ async function init() {
   try {
     const result = await db();
     console.log("database status", result);
+    console.log("DATABASE_URL:", process.env.DATABASE_URL);
     const app = express();
     const PORT = 3000;
 
@@ -26,7 +27,7 @@ async function init() {
     });
 
     app.listen(PORT, () =>
-      console.log(`server is running on http://localhost:${PORT}`)
+      console.log(`server is running on http://localhost:${PORT}`),
     );
   } catch (error) {
     console.log(error);

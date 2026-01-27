@@ -25,8 +25,8 @@ const doc = {
     },
     schemas: {
       LoginRequest: {
-        identifier: "kucung",
-        password: "kucung123",
+        identifier: "temon",
+        password: "Temon123",
       },
       activation: {
         code: "abcde",
