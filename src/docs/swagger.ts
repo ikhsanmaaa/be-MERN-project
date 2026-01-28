@@ -55,6 +55,19 @@ const doc = {
       RemoveMediaRequest: {
         fileUrl: "",
       },
+      CreateBannerRequest: {
+        title: "Slipknot Concert",
+        image:
+          "https://res.cloudinary.com/dsabcs3bo/image/upload/v1769606677/cuvrlae4ndmgx2ztbifl.jpg",
+        isShow: true,
+      },
+      CreateTicketRequest: {
+        price: 500,
+        name: "Ticket common",
+        events: "69787450244a8dc994fef5d3",
+        description: "cheap one",
+        quantity: 10000,
+      },
     },
   },
 };
