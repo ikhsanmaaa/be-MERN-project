@@ -23,6 +23,8 @@ export interface EventDocument {
   };
 }
 
+export const EVENT_MODEL_NAME = "Event";
+
 const EventSchema = new Schema<EventDocument>(
   {
     name: { type: String, required: true },
@@ -68,4 +70,4 @@ EventSchema.pre("save", function (next) {
   next();
 });
 
-export default mongoose.model<EventDocument>("Event", EventSchema);
+export default mongoose.model<EventDocument>(EVENT_MODEL_NAME, EventSchema);

@@ -37,6 +37,7 @@ export default {
       response.error(res, error, "failed to update event");
     }
   },
+
   async findAll(req: IReqUser, res: Response) {
     try {
       const result = await EventModel.find().sort({ createdAt: -1 }).lean();
@@ -50,9 +51,14 @@ export default {
       response.error(res, error, "failed fetch events");
     }
   },
+
   async findOne(req: IReqUser, res: Response) {
     const { id } = req.params;
     const result = await EventModel.findById(id).lean();
+
+    if (!result) {
+      return response.notFound(res, "event not found!");
+    }
 
     response.success(res, serializeEvent(result), "success find one event");
   },

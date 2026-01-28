@@ -15,6 +15,7 @@ export default {
       response.error(res, error, "failed create category");
     }
   },
+
   async findAll(req: IReqUser, res: Response) {
     const {
       page = 1,
@@ -50,22 +51,28 @@ export default {
           totalPages: Math.ceil(count / limit),
           current: page,
         },
-        "success find all category"
+        "success find all category",
       );
     } catch (error) {
       response.error(res, error, "failed find all category");
     }
   },
+
   async findOne(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
       const result = await CategoryModel.findById(id);
+
+      if (!result) {
+        return response.notFound(res, "category not found!");
+      }
 
       response.success(res, result, "success find one category");
     } catch (error) {
       response.error(res, error, "failed find one category");
     }
   },
+
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
@@ -78,6 +85,7 @@ export default {
       response.error(res, error, "failed update category");
     }
   },
+
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;

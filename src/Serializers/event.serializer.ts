@@ -1,5 +1,3 @@
-import { EventDocument } from "../models/event.model";
-
 export function serializeEvent(event: any) {
   if (!event) return event;
 
