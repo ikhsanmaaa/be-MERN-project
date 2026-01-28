@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
 
-export interface EventDocument {
+export interface IEvent {
   name: string;
   startDate: string;
   endDate: string;
@@ -25,7 +25,7 @@ export interface EventDocument {
 
 export const EVENT_MODEL_NAME = "Event";
 
-const EventSchema = new Schema<EventDocument>(
+const EventSchema = new Schema<IEvent>(
   {
     name: { type: String, required: true },
     startDate: { type: String, required: true },
@@ -61,7 +61,9 @@ const EventSchema = new Schema<EventDocument>(
     },
   },
   { timestamps: true },
-);
+).index({
+  name: "text",
+});
 
 EventSchema.pre("save", function (next) {
   if (!this.slug) {
@@ -70,4 +72,6 @@ EventSchema.pre("save", function (next) {
   next();
 });
 
-export default mongoose.model<EventDocument>(EVENT_MODEL_NAME, EventSchema);
+const EventModel = mongoose.model<IEvent>(EVENT_MODEL_NAME, EventSchema);
+
+export default EventModel;

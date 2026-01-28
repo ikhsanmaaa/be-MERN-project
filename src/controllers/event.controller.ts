@@ -1,9 +1,13 @@
 import { Response } from "express";
-import { IReqUser } from "../utils/interfaces";
+import { IPaginationQuerry, IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
-import EventModel from "../models/event.model";
+import EventModel, { IEvent } from "../models/event.model";
 import { createEventSchema, updateEventSchema } from "../Schemas/event.schema";
-import { serializeEvent } from "../Serializers/event.serializer";
+import {
+  serializeEvent,
+  serializeEventArray,
+} from "../Serializers/event.serializer";
+import { FilterQuery, isValidObjectId } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -24,7 +28,9 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
-
+      if (!isValidObjectId) {
+        return response.notFound(res, "banner is not found!");
+      }
       await updateEventSchema.validate(req.body, { abortEarly: false });
 
       const result = await EventModel.findByIdAndUpdate(id, req.body, {
@@ -40,15 +46,40 @@ export default {
 
   async findAll(req: IReqUser, res: Response) {
     try {
-      const result = await EventModel.find().sort({ createdAt: -1 }).lean();
+      const {
+        limit = 10,
+        page = 1,
+        search,
+      } = req.query as unknown as IPaginationQuerry;
+      const query: FilterQuery<IEvent> = {};
+      if (search) {
+        Object.assign(query, {
+          ...query,
+          $text: {
+            $search: search,
+          },
+        });
+      }
+      const result = await EventModel.find(query)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .sort({ createdAt: -1 })
+        .exec();
 
-      response.success(
+      const count = await EventModel.countDocuments(query);
+
+      response.pagination(
         res,
-        result.map(serializeEvent),
-        "success fetch all events",
+        serializeEventArray(result),
+        {
+          total: count,
+          current: page,
+          totalPages: Math.ceil(count / limit),
+        },
+        "success find all tickets",
       );
     } catch (error) {
-      response.error(res, error, "failed fetch events");
+      response.error(res, error, "failed find events");
     }
   },
 
@@ -85,6 +116,11 @@ export default {
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+
+      if (!isValidObjectId) {
+        return response.notFound(res, "failed remove event");
+      }
+
       await EventModel.findByIdAndDelete(id);
       response.success(res, null, "success delete event");
     } catch (error) {
