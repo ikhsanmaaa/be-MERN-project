@@ -1,5 +1,4 @@
 import mongoose, { Schema, Types } from "mongoose";
-import { USER_MODEL_NAME } from "./user.model";
 
 export interface IEvent {
   name: string;
@@ -48,12 +47,6 @@ const EventSchema = new Schema<IEvent>(
     isFeatured: { type: Boolean, required: true },
     isOnline: { type: Boolean, required: true },
     isPublish: { type: Boolean, default: false },
-
-    createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: USER_MODEL_NAME,
-      required: true,
-    },
 
     location: {
       region: { type: Number, required: true },

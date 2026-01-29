@@ -13,8 +13,6 @@ export const createEventSchema = yup.object({
   isOnline: yup.boolean().required(),
   isPublish: yup.boolean(),
 
-  createdBy: yup.string().required(),
-
   location: yup
     .object({
       region: yup.number().required(),
