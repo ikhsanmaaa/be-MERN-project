@@ -11,6 +11,8 @@ export const categoryDAO = yup.object({
 
 export type Category = yup.InferType<typeof categoryDAO>;
 
+export const CATEGORY_MODEL_NAME = "Category";
+
 const CategorySchema = new Schema<Category>(
   {
     name: {
@@ -33,5 +35,5 @@ const CategorySchema = new Schema<Category>(
   name: "text",
 });
 
-const CategoryModel = mongoose.model("Category", CategorySchema);
+const CategoryModel = mongoose.model(CATEGORY_MODEL_NAME, CategorySchema);
 export default CategoryModel;

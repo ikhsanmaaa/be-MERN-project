@@ -16,6 +16,8 @@ export interface User {
   createdAt?: string;
 }
 
+export const USER_MODEL_NAME = "User";
+
 const schema = mongoose.Schema;
 const userSchema = new schema<User>(
   {
@@ -56,7 +58,7 @@ const userSchema = new schema<User>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 userSchema.pre("save", function (next) {
@@ -95,6 +97,6 @@ userSchema.methods.toJSON = function () {
   delete user.password;
   return user;
 };
-const userModel = mongoose.model("user", userSchema);
+const userModel = mongoose.model(USER_MODEL_NAME, userSchema);
 
 export default userModel;

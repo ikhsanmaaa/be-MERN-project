@@ -1,4 +1,5 @@
 import mongoose, { Schema, Types } from "mongoose";
+import { USER_MODEL_NAME } from "./user.model";
 
 export interface IEvent {
   name: string;
@@ -50,7 +51,7 @@ const EventSchema = new Schema<IEvent>(
 
     createdBy: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: USER_MODEL_NAME,
       required: true,
     },
 
