@@ -231,9 +231,9 @@ const provinceSchema = new mongoose.Schema(
             },
           },
         ]);
-      }, // kelurahan
+      },
     },
-  }
+  },
 ).index({ name: "text" });
 
 const RegionModel = mongoose.model("Region", provinceSchema);

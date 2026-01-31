@@ -127,7 +127,7 @@ router.delete(
   "/tickets/:id",
   [authMiddleware, aclMiddleware([ROLES.ADMIN]), ticketController.remove],
   /*
-  #swagger.tags = ['Banners']
+  #swagger.tags = ['Tickets']
   #swagger.security = [{
     "bearerAuth": {}
   }]
