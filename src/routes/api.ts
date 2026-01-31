@@ -123,6 +123,13 @@ router.put(
    }
    */
 );
+router.get(
+  "/tickets/:eventId/events",
+  ticketController.findAllByEvent,
+  /*
+#swagger.tags = ['Tickets']
+*/
+);
 router.delete(
   "/tickets/:id",
   [authMiddleware, aclMiddleware([ROLES.ADMIN]), ticketController.remove],
@@ -132,13 +139,6 @@ router.delete(
     "bearerAuth": {}
   }]
   */
-);
-router.get(
-  "/tickets/:eventId/events",
-  ticketController.findAllByEvent,
-  /*
-#swagger.tags = ['Tickets']
-*/
 );
 
 router.post(
