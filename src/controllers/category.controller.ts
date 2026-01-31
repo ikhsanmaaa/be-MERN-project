@@ -61,7 +61,7 @@ export default {
   async findOne(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "category not found!");
       }
       const result = await CategoryModel.findById(id);
@@ -80,7 +80,7 @@ export default {
     try {
       const { id } = req.params;
 
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "failed update category");
       }
 
@@ -98,7 +98,7 @@ export default {
     try {
       const { id } = req.params;
 
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "failed remove category");
       }
 

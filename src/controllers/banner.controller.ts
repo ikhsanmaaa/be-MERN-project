@@ -60,7 +60,7 @@ export default {
     try {
       const { id } = req.params;
 
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "banner not found!");
       }
       const result = await BannerModel.findById(id);
@@ -78,7 +78,7 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "failed update banner");
       }
       const result = await BannerModel.findByIdAndUpdate(id, req.body, {
@@ -94,7 +94,7 @@ export default {
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "failed remove banner");
       }
       const result = await BannerModel.findByIdAndDelete(id);

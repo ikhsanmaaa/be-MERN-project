@@ -28,7 +28,7 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "banner is not found!");
       }
       await updateEventSchema.validate(req.body, { abortEarly: false });
@@ -117,7 +117,7 @@ export default {
     try {
       const { id } = req.params;
 
-      if (!isValidObjectId) {
+      if (!isValidObjectId(id)) {
         return response.notFound(res, "failed remove event");
       }
 
