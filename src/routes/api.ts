@@ -250,6 +250,13 @@ router.put(
   }
   */
 );
+router.get(
+  "/events/:slug/slug",
+  eventController.findOneBySlug,
+  /*
+  #swagger.tags = ['Events']
+  */
+);
 router.delete(
   "/events/:id",
   [authMiddleware, aclMiddleware([ROLES.ADMIN])],
@@ -259,13 +266,6 @@ router.delete(
   #swagger.security=[{
     "bearerAuth": {}
   }]
-  */
-);
-router.get(
-  "/events/:slug/slug",
-  eventController.findOneBySlug,
-  /*
-  #swagger.tags = ['Events']
   */
 );
 

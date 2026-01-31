@@ -414,7 +414,7 @@
       },
       "delete": {
         "tags": [
-          "Banners"
+          "Tickets"
         ],
         "description": "",
         "parameters": [
