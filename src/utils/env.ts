@@ -14,7 +14,7 @@ export const EMAIL_SMTP_HOST: string = process.env.EMAIL_SMTP_HOST || "";
 export const EMAIL_SMTP_SERVICE_NAME: string =
   process.env.EMAIL_SMTP_SERVICE_NAME || "";
 export const CLIENT_HOST: string =
-  process.env.CLIENT_HOST || "http://localhost:3000";
+  process.env.CLIENT_HOST || "http://localhost:3001";
 export const CLOUDINARY_CLOUD_NAME: string =
   process.env.CLOUDINARY_CLOUD_NAME || "";
 export const CLOUDINARY_API_KEY: string = process.env.CLOUDINARY_API_KEY || "";

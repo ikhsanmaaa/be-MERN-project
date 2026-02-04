@@ -59,10 +59,14 @@ export default {
      */
     try {
       const { identifier, password } = req.body as TLogin;
-
       const user = await userModel.findOne({
         $or: [{ email: identifier }, { username: identifier }],
       });
+
+      console.log("=== LOGIN CONTROLLER HIT ===");
+      console.log("IDENTIFIER:", identifier);
+      console.log("DB:", process.env.DATABASE_URL);
+      console.log("USER:", user);
 
       if (!user) {
         return response.unauthorized(res, "user not found");
