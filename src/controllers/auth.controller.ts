@@ -68,7 +68,6 @@ export default {
         return response.unauthorized(res, "user not found");
       }
 
-      // ✅ CEK USER INI SAJA
       if (!user.isActive) {
         return response.unauthorized(res, "user not activated yet");
       }
