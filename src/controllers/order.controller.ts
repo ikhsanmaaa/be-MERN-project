@@ -9,7 +9,6 @@ import OrderModel, {
 } from "../models/order.model";
 import TicketModel from "../models/ticket.model";
 import { FilterQuery } from "mongoose";
-import { array } from "yup";
 import { getId } from "../utils/id";
 
 export default {

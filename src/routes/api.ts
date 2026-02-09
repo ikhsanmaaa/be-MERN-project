@@ -10,6 +10,7 @@ import regionController from "../controllers/region.controller";
 import eventController from "../controllers/event.controller";
 import ticketController from "../controllers/ticket.controller";
 import bannerController from "../controllers/banner.controller";
+import orderController from "../controllers/order.controller";
 
 const router = express.Router();
 
@@ -142,10 +143,41 @@ router.delete(
 );
 
 router.post(
-  "/category",
+  "/orders",
   [authMiddleware, aclMiddleware([ROLES.ADMIN])],
-  categoryController.create,
+  orderController.create,
   /*
+   #swagger.tags = ['Order']
+   #swagger.security = [{
+    "bearerAuth":{}
+   }]
+   #swagger.requestBody = {
+    required:true,
+    schema:{
+      $ref: "#/components/schemas/CreateOrderRequest"
+    }
+   }
+   */
+),
+  router.get(
+    "/orders",
+    orderController.findAll,
+    /*
+  #swagger.tags = ['Order']
+  */
+  ),
+  router.get(
+    "/orders/:orderId",
+    orderController.findOne,
+    /*
+  #swagger.tags = ['Order']
+  */
+  ),
+  router.post(
+    "/category",
+    [authMiddleware, aclMiddleware([ROLES.ADMIN])],
+    categoryController.create,
+    /*
    #swagger.tags = ['Category']
    #swagger.security = [{
     "bearerAuth":{}
@@ -157,11 +189,10 @@ router.post(
     }
    }
    */
-);
+  );
 router.get(
   "/category",
   categoryController.findAll,
-
   /*
   #swagger.tags = ['Category']
   */
