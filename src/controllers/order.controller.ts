@@ -14,8 +14,6 @@ import { getId } from "../utils/id";
 export default {
   async create(req: IReqUser, res: Response) {
     try {
-      console.log("REQ BODY:", req.body);
-      console.log("USER ID:", req.user?.id);
       const userId = req.user?.id;
       const payload = {
         ...req.body,
