@@ -144,7 +144,6 @@ router.delete(
 
 router.post(
   "/orders",
-  [authMiddleware, aclMiddleware([ROLES.ADMIN])],
   orderController.create,
   /*
    #swagger.tags = ['Order']
