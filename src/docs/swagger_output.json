@@ -18,9 +18,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "responses": {
           "default": {
@@ -54,9 +52,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "responses": {
           "default": {
@@ -82,9 +78,7 @@
     },
     "/auth/me": {
       "get": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "responses": {
           "default": {
@@ -100,9 +94,7 @@
     },
     "/auth/activation": {
       "post": {
-        "tags": [
-          "auth"
-        ],
+        "tags": ["auth"],
         "description": "",
         "responses": {
           "default": {
@@ -127,9 +119,7 @@
     },
     "/banners": {
       "post": {
-        "tags": [
-          "Banners"
-        ],
+        "tags": ["Banners"],
         "description": "",
         "responses": {
           "default": {
@@ -158,9 +148,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Banners"
-        ],
+        "tags": ["Banners"],
         "description": "",
         "parameters": [
           {
@@ -194,9 +182,7 @@
     },
     "/banners/{id}": {
       "get": {
-        "tags": [
-          "Banners"
-        ],
+        "tags": ["Banners"],
         "description": "",
         "parameters": [
           {
@@ -215,9 +201,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Banners"
-        ],
+        "tags": ["Banners"],
         "description": "",
         "parameters": [
           {
@@ -256,9 +240,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Banners"
-        ],
+        "tags": ["Banners"],
         "description": "",
         "parameters": [
           {
@@ -284,9 +266,7 @@
     },
     "/tickets": {
       "post": {
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "description": "",
         "responses": {
           "default": {
@@ -315,9 +295,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "description": "",
         "parameters": [
           {
@@ -351,9 +329,7 @@
     },
     "/tickets/{id}": {
       "get": {
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "description": "",
         "parameters": [
           {
@@ -372,9 +348,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "description": "",
         "parameters": [
           {
@@ -413,9 +387,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "description": "",
         "parameters": [
           {
@@ -441,9 +413,7 @@
     },
     "/tickets/{eventId}/events": {
       "get": {
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "description": "",
         "parameters": [
           {
@@ -464,9 +434,7 @@
     },
     "/orders": {
       "post": {
-        "tags": [
-          "Order"
-        ],
+        "tags": ["Order"],
         "description": "",
         "responses": {
           "default": {
@@ -495,9 +463,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Order"
-        ],
+        "tags": ["Order"],
         "description": "",
         "parameters": [
           {
@@ -531,9 +497,7 @@
     },
     "/orders/{orderId}": {
       "get": {
-        "tags": [
-          "Order"
-        ],
+        "tags": ["Order"],
         "description": "",
         "parameters": [
           {
@@ -554,9 +518,7 @@
     },
     "/category": {
       "post": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "description": "",
         "responses": {
           "default": {
@@ -585,9 +547,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "description": "",
         "parameters": [
           {
@@ -621,9 +581,7 @@
     },
     "/category/{id}": {
       "get": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "description": "",
         "parameters": [
           {
@@ -642,9 +600,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "description": "",
         "parameters": [
           {
@@ -683,9 +639,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Category"
-        ],
+        "tags": ["Category"],
         "description": "",
         "parameters": [
           {
@@ -711,9 +665,7 @@
     },
     "/events": {
       "post": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "description": "",
         "responses": {
           "default": {
@@ -742,9 +694,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "description": "",
         "parameters": [
           {
@@ -808,9 +758,7 @@
     },
     "/events/{id}": {
       "get": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "description": "",
         "parameters": [
           {
@@ -829,9 +777,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "description": "",
         "parameters": [
           {
@@ -870,9 +816,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "description": "",
         "parameters": [
           {
@@ -898,9 +842,7 @@
     },
     "/events/{slug}/slug": {
       "get": {
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "description": "",
         "parameters": [
           {
@@ -921,9 +863,7 @@
     },
     "/regions": {
       "get": {
-        "tags": [
-          "Regions"
-        ],
+        "tags": ["Regions"],
         "description": "",
         "responses": {
           "default": {
@@ -934,9 +874,7 @@
     },
     "/regions/{id}/province": {
       "get": {
-        "tags": [
-          "Regions"
-        ],
+        "tags": ["Regions"],
         "description": "",
         "parameters": [
           {
@@ -957,9 +895,7 @@
     },
     "/regions/{id}/regency": {
       "get": {
-        "tags": [
-          "Regions"
-        ],
+        "tags": ["Regions"],
         "description": "",
         "parameters": [
           {
@@ -980,9 +916,7 @@
     },
     "/regions/{id}/district": {
       "get": {
-        "tags": [
-          "Regions"
-        ],
+        "tags": ["Regions"],
         "description": "",
         "parameters": [
           {
@@ -1003,9 +937,7 @@
     },
     "/regions/{id}/village": {
       "get": {
-        "tags": [
-          "Regions"
-        ],
+        "tags": ["Regions"],
         "description": "",
         "parameters": [
           {
@@ -1026,9 +958,7 @@
     },
     "/regions-search": {
       "get": {
-        "tags": [
-          "Regions"
-        ],
+        "tags": ["Regions"],
         "description": "",
         "parameters": [
           {
@@ -1048,9 +978,7 @@
     },
     "/media/upload-single": {
       "post": {
-        "tags": [
-          "Media"
-        ],
+        "tags": ["Media"],
         "description": "",
         "responses": {
           "default": {
@@ -1082,9 +1010,7 @@
     },
     "/media/upload-multiple": {
       "post": {
-        "tags": [
-          "Media"
-        ],
+        "tags": ["Media"],
         "description": "",
         "responses": {
           "default": {
@@ -1119,9 +1045,7 @@
     },
     "/media/remove": {
       "delete": {
-        "tags": [
-          "Media"
-        ],
+        "tags": ["Media"],
         "description": "",
         "responses": {
           "default": {
@@ -1243,10 +1167,7 @@
               },
               "coordinates": {
                 "type": "array",
-                "example": [
-                  0,
-                  0
-                ],
+                "example": [0, 0],
                 "items": {
                   "type": "number"
                 }
@@ -1332,6 +1253,30 @@
         },
         "xml": {
           "name": "CreateTicketRequest"
+        }
+      },
+      "CreateOrderRequest": {
+        "type": "object",
+        "properties": {
+          "ticket": {
+            "type": "string",
+            "example": "6988085016ec9c053b6a4bd0"
+          },
+          "events": {
+            "type": "string",
+            "example": "69787450244a8dc994fef5d3"
+          },
+          "createdBy": {
+            "type": "string",
+            "example": "698320142f018d00a8149786"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10000
+          }
+        },
+        "xml": {
+          "name": "CreateOrderRequest"
         }
       }
     }
