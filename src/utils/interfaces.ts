@@ -13,7 +13,7 @@ export interface IUserToken
     | "isActive"
     | "email"
     | "fullName"
-    | "profilPicture"
+    | "profilePicture"
     | "username"
   > {
   id?: Types.ObjectId;

@@ -1,72 +1,104 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
-import userModel from "../models/user.model";
 import { encrypt } from "../utils/encryption";
 import { generateToken } from "../utils/jwt";
 import { IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
-
-type TRegister = {
-  fullName: string;
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
-type TLogin = {
-  identifier: string;
-  password: string;
-};
+import userModel, {
+  userDTO,
+  userLoginDTO,
+  userUpdateDTO,
+} from "../models/user.model";
 
 export default {
-  // =========================
-  // REGISTER
-  // =========================
-  async register(req: Request, res: Response) {
-    /**
-     #swagger.tags=['auth']
-     */
+  async updateProfile(req: IReqUser, res: Response) {
     try {
-      const payload = req.body as TRegister;
+      const userId = req.user?.id;
+      const { fullName, profilePicture } = req.body;
 
-      await registerValidateSchema.validate(payload);
+      const result = await userModel.findByIdAndUpdate(
+        userId,
+        {
+          fullName,
+          profilePicture,
+        },
+        { new: true },
+      );
 
-      const user = await userModel.create({
-        fullName: payload.fullName,
-        username: payload.username,
-        email: payload.email,
-        password: payload.password,
-        // isActive default = false (di schema)
+      if (!result) return response.notFound(res, "user not found");
+
+      response.success(res, result, "success to update profile");
+    } catch (error) {
+      response.error(res, error, "failed to update profile");
+    }
+  },
+  async updatePassword(req: IReqUser, res: Response) {
+    try {
+      const userId = req.user?.id;
+      const { oldPassword, password, confirmPassword } = req.body;
+
+      await userUpdateDTO.validate({
+        oldPassword,
+        password,
+        confirmPassword,
       });
 
-      response.success(res, user, "success registration");
+      const user = await userModel.findById(userId);
+
+      if (!user || user.password !== encrypt(oldPassword))
+        return response.notFound(res, "user not found");
+
+      const result = await userModel.findByIdAndUpdate(
+        userId,
+        {
+          password: encrypt(password),
+        },
+        { new: true },
+      );
+
+      response.success(res, result, "success to update password");
+    } catch (error) {
+      response.error(res, error, "failed to update password");
+    }
+  },
+
+  async register(req: Request, res: Response) {
+    try {
+      const { fullName, username, email, password, confirmPassword } = req.body;
+
+      await userDTO.validate({
+        fullName,
+        username,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      const result = await userModel.create({
+        fullName,
+        email,
+        username,
+        password,
+      });
+
+      response.success(res, result, "success registration");
     } catch (error) {
       response.error(res, error, "failed registration");
     }
   },
 
-  // =========================
-  // LOGIN
-  // =========================
   async login(req: Request, res: Response) {
-    /**
-     #swagger.tags=['auth']
-     #swagger.requestBody = {
-        required: true,
-        schema: {$ref: "#/components/schemas/LoginRequest"}
-     }
-     */
     try {
-      const { identifier, password } = req.body as TLogin;
+      const { identifier, password } = req.body;
+
+      await userLoginDTO.validate({
+        identifier,
+        password,
+      });
+
       const user = await userModel.findOne({
         $or: [{ email: identifier }, { username: identifier }],
       });
-
-      console.log("=== LOGIN CONTROLLER HIT ===");
-      console.log("IDENTIFIER:", identifier);
-      console.log("DB:", process.env.DATABASE_URL);
-      console.log("USER:", user);
 
       if (!user) {
         return response.unauthorized(res, "user not found");
@@ -93,14 +125,7 @@ export default {
     }
   },
 
-  // =========================
-  // GET ME
-  // =========================
   async me(req: IReqUser, res: Response) {
-    /**
-     #swagger.tags=['auth']
-     #swagger.security = [{ "bearerAuth": [] }]
-     */
     try {
       const user = await userModel.findById(req.user?.id).select("-password");
       response.success(res, user, "success get profile");
@@ -109,13 +134,7 @@ export default {
     }
   },
 
-  // =========================
-  // ACTIVATION
-  // =========================
   async activation(req: Request, res: Response) {
-    /**
-     #swagger.tags=['auth']
-     */
     try {
       const { code } = req.body as { code: string };
 

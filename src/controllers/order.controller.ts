@@ -2,10 +2,10 @@ import { Response } from "express";
 import { IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
 import OrderModel, {
-  orderDAO,
   OrderStatus,
   TypeOrder,
   TypeVoucher,
+  orderDTO,
 } from "../models/order.model";
 import TicketModel from "../models/ticket.model";
 import { FilterQuery } from "mongoose";
@@ -20,7 +20,7 @@ export default {
         createdBy: userId,
       } as TypeOrder;
 
-      await orderDAO.validate(payload);
+      await orderDTO.validate(payload);
 
       const ticket = await TicketModel.findById(payload.ticket);
       if (!ticket) return response.notFound(res, "ticket not found!");
@@ -151,14 +151,98 @@ export default {
   },
   async pending(req: IReqUser, res: Response) {
     try {
+      const { orderId } = req.params;
+
+      const order = await OrderModel.findOne({
+        orderId,
+      });
+
+      if (!order) return response.notFound(res, "order not found");
+
+      if (order.status === OrderStatus.COMPLETED) {
+        return response.error(res, null, "this order has been completed");
+      }
+
+      if (order.status === OrderStatus.PENDING) {
+        return response.error(
+          res,
+          null,
+          "this order currently in payment pending",
+        );
+      }
+
+      const result = await OrderModel.findOneAndUpdate(
+        { orderId },
+        {
+          status: OrderStatus.PENDING,
+        },
+        {
+          new: true,
+        },
+      );
+
+      response.success(res, result, "success to pending an order");
     } catch (error) {
       response.error(res, error, "failed to pending an order");
     }
   },
   async cancelled(req: IReqUser, res: Response) {
     try {
+      const { orderId } = req.params;
+
+      const order = await OrderModel.findOne({
+        orderId,
+      });
+
+      if (!order) return response.notFound(res, "order not found");
+
+      if (order.status === OrderStatus.COMPLETED) {
+        return response.error(res, null, "this order has been completed");
+      }
+
+      if (order.status === OrderStatus.CANCELLED) {
+        return response.error(
+          res,
+          null,
+          "this order currently in payment cancelled",
+        );
+      }
+
+      const result = await OrderModel.findOneAndUpdate(
+        { orderId },
+        {
+          status: OrderStatus.CANCELLED,
+        },
+        {
+          new: true,
+        },
+      );
+
+      response.success(res, result, "success to cancelled an order");
     } catch (error) {
-      response.error(res, error, "failed to pending an order");
+      response.error(res, error, "failed to cancelled an order");
+    }
+  },
+
+  async remove(req: IReqUser, res: Response) {
+    try {
+      const { orderId } = req.params;
+      const result = await OrderModel.findOneAndDelete(
+        {
+          orderId,
+        },
+        {
+          new: true,
+        },
+      );
+
+      if (!result) {
+        return response.notFound(res, "order not found");
+      }
+
+      response.success(res, result, "success to remove an order");
+    } catch (error) {
+      response.error(res, error, "failed to remove an order");
     }
   },
 };

@@ -31,6 +31,15 @@ const doc = {
       activation: {
         code: "abcde",
       },
+      UpdateProfile: {
+        fullName: "",
+        profilePicture: "",
+      },
+      UpdatePassword: {
+        oldPassword: "",
+        password: "",
+        confirmPassword: "",
+      },
       CreateCategoryRequest: {
         name: "",
         description: "",
@@ -67,6 +76,11 @@ const doc = {
         events: "69787450244a8dc994fef5d3",
         description: "cheap one",
         quantity: 10000,
+      },
+      CreateOrderRequest: {
+        events: "event object id",
+        ticket: "ticket object id",
+        quantity: 1,
       },
     },
   },

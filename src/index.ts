@@ -4,12 +4,11 @@ import bodyParser from "body-parser";
 import db from "./utils/db";
 import docs from "./docs/route";
 import cors from "cors";
+import errorMiddleware from "./middlewares/error.middleware";
 
 async function init() {
   try {
     const result = await db();
-    console.log("database status", result);
-    console.log("DATABASE_URL:", process.env.DATABASE_URL);
     const app = express();
     const PORT = 3000;
 
@@ -18,6 +17,9 @@ async function init() {
     app.use("/api", router);
 
     docs(app);
+
+    app.use(errorMiddleware.serverRoute());
+    app.use(errorMiddleware.serverError());
 
     app.get("/", (req, res) => {
       res.status(200).json({

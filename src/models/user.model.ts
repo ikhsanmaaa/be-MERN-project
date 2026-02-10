@@ -3,6 +3,19 @@ import { encrypt } from "../utils/encryption";
 import { renderMailHtml, sendMail } from "../utils/mail/mail";
 import { CLIENT_HOST, EMAIL_SMTP_USER } from "../utils/env";
 import { ROLES } from "../utils/constant";
+import * as yup from "yup";
+
+const validatePassword = yup
+  .string()
+  .required()
+  .min(6)
+  .matches(/[A-Z]/, "must contain uppercase letter")
+  .matches(/[0-9]/, "must contain number");
+
+const validateConfirmPassword = yup
+  .string()
+  .required()
+  .oneOf([yup.ref("password")], "password must match");
 
 export interface User {
   fullName: string;
@@ -10,13 +23,42 @@ export interface User {
   email: string;
   password: string;
   role: string;
-  profilPicture: string;
+  profilePicture: string;
   isActive: boolean;
   activationCode: string;
   createdAt?: string;
 }
 
 export const USER_MODEL_NAME = "User";
+
+export const userLoginDTO = yup.object({
+  identifier: yup.string().required(),
+  password: validatePassword,
+});
+
+export const userUpdateDTO = yup.object({
+  oldPassword: validatePassword,
+  password: validatePassword,
+  confirmPassword: validateConfirmPassword,
+});
+
+export const userDTO = yup.object({
+  fullName: yup.string().required(),
+  username: yup.string().required(),
+  email: yup.string().email().required(),
+  password: validatePassword,
+  confirmPassword: validateConfirmPassword,
+});
+
+export type TypeUser = yup.InferType<typeof userDTO>;
+
+export interface User extends Omit<TypeUser, "confirmPassword"> {
+  isActive: boolean;
+  activationCode: string;
+  role: string;
+  profilePicture: string;
+  createdAt?: string;
+}
 
 const schema = mongoose.Schema;
 const userSchema = new schema<User>(
@@ -44,7 +86,7 @@ const userSchema = new schema<User>(
       enum: [ROLES.ADMIN, ROLES.MEMBER],
       default: ROLES.MEMBER,
     },
-    profilPicture: {
+    profilePicture: {
       type: schema.Types.String,
       default: "user.jpg",
     },

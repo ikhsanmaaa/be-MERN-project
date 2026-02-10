@@ -8,6 +8,7 @@ import {
   serializeEventArray,
 } from "../Serializers/event.serializer";
 import { FilterQuery, isValidObjectId } from "mongoose";
+import uploader from "../utils/uploader";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -37,6 +38,8 @@ export default {
         new: true,
         lean: true,
       });
+
+      if (!result) return response.notFound(res, "event not found");
 
       response.success(res, serializeEvent(result), "success update event");
     } catch (error) {
@@ -136,7 +139,14 @@ export default {
         return response.notFound(res, "failed remove event");
       }
 
-      await EventModel.findByIdAndDelete(id);
+      const result = await EventModel.findByIdAndDelete(id, {
+        new: true,
+      });
+
+      if (!result) return response.notFound(res, "event not found");
+
+      await uploader.remove(result?.banner);
+
       response.success(res, null, "success delete event");
     } catch (error) {
       response.error(res, error, "failed delete event");
