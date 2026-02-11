@@ -95,7 +95,48 @@ export default {
       response.error(res, error, "failed to find one order");
     }
   },
-  async findAllByMember(req: IReqUser, res: Response) {},
+  async findAllByMember(req: IReqUser, res: Response) {
+    try {
+      const userId = req.user?.id;
+      const buildQuery = (filter: any) => {
+        let query: FilterQuery<TypeOrder> = {
+          createdBy: userId,
+        };
+
+        if (filter.search) query.$text = { $search: filter.search };
+
+        return query;
+      };
+
+      const { limit = 10, page = 1, search } = req.query;
+
+      const query = buildQuery({
+        search,
+      });
+
+      const result = await OrderModel.find(query)
+        .limit(+limit)
+        .skip((+page - 1) * +limit)
+        .sort({ createdAt: -1 })
+        .lean()
+        .exec();
+
+      const count = await OrderModel.countDocuments(query);
+
+      response.pagination(
+        res,
+        result,
+        {
+          current: +page,
+          total: count,
+          totalPages: Math.ceil(count / +limit),
+        },
+        "success find all orders",
+      );
+    } catch (error) {
+      response.error(res, error, "failed find all orders");
+    }
+  },
 
   async complete(req: IReqUser, res: Response) {
     try {
