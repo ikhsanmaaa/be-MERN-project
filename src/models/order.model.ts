@@ -24,7 +24,7 @@ export enum OrderStatus {
 }
 
 export type TypeVoucher = {
-  voucerId: string;
+  voucherId: string;
   isPrint: boolean;
 };
 

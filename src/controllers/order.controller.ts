@@ -158,7 +158,7 @@ export default {
         () => {
           return {
             isPrint: false,
-            voucerId: getId(),
+            voucherId: getId(),
           } as TypeVoucher;
         },
       );
