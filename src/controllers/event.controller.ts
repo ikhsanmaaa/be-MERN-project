@@ -94,7 +94,7 @@ export default {
           current: +page,
           totalPages: Math.ceil(count / +limit),
         },
-        "success find all tickets",
+        "success find all events",
       );
     } catch (error) {
       response.error(res, error, "failed find events");
