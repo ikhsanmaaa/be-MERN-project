@@ -11,6 +11,7 @@ import eventController from "../controllers/event.controller";
 import ticketController from "../controllers/ticket.controller";
 import bannerController from "../controllers/banner.controller";
 import orderController from "../controllers/order.controller";
+import midtransController from "../controllers/midtrans.controller";
 
 const router = express.Router();
 
@@ -578,6 +579,8 @@ router.delete(
   }
 }
 */
+
+  router.post("/midtrans/webhook", midtransController.midtransWebhook),
 );
 
 export default router;

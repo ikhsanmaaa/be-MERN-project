@@ -10,11 +10,13 @@ import OrderModel, {
 import TicketModel from "../models/ticket.model";
 import { FilterQuery } from "mongoose";
 import { getId } from "../utils/id";
+import axios from "axios";
 
 export default {
   async create(req: IReqUser, res: Response) {
     try {
       const userId = req.user?.id;
+
       const payload = {
         ...req.body,
         createdBy: userId,
@@ -29,18 +31,32 @@ export default {
         return response.error(res, null, "ticket quantity is not enough");
       }
 
-      const total: number = +ticket?.price * +payload.quantity;
+      const total = +ticket.price * +payload.quantity;
+      const orderId = `MERN-${getId()}`;
 
-      Object.assign(payload, {
+      const order = await OrderModel.create({
         ...payload,
+        orderId,
         total,
+        status: OrderStatus.PENDING,
       });
 
-      const result = await OrderModel.create(payload);
+      const paymentResponse = await axios.post(
+        "https://your-payment-service.com/create-transaction",
+        {
+          orderId,
+          grossAmount: total,
+          origin: req.headers.origin,
+        },
+      );
 
-      response.success(res, result, "success to create an order");
+      order.paymentToken = paymentResponse.data.token;
+      order.paymentRedirectUrl = paymentResponse.data.redirect_url;
+      await order.save();
+
+      response.success(res, order, "success create order");
     } catch (error) {
-      response.error(res, error, "failed to create an order");
+      response.error(res, error, "failed to create order");
     }
   },
 
