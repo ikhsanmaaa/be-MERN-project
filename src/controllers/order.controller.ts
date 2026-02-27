@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
+
 import OrderModel, {
   OrderStatus,
   TypeOrder,
@@ -10,7 +11,7 @@ import OrderModel, {
 import TicketModel from "../models/ticket.model";
 import { FilterQuery } from "mongoose";
 import { getId } from "../utils/id";
-import axios from "axios";
+import snap from "../utils/midtrans";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -41,17 +42,17 @@ export default {
         status: OrderStatus.PENDING,
       });
 
-      const paymentResponse = await axios.post(
-        "https://midtrans-payment-lac.vercel.app/api/webhook",
-        {
-          orderId,
-          grossAmount: total,
-          origin: req.headers.origin,
+      const parameter = {
+        transaction_details: {
+          order_id: orderId,
+          gross_amount: total,
         },
-      );
+      };
 
-      order.paymentToken = paymentResponse.data.token;
-      order.paymentRedirectUrl = paymentResponse.data.redirect_url;
+      const transaction = await snap.createTransaction(parameter);
+
+      order.paymentToken = transaction.token;
+      order.paymentRedirectUrl = transaction.redirect_url;
       await order.save();
 
       response.success(res, order, "success create order");
